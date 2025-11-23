@@ -1,5 +1,55 @@
 # E-Commerce Microservices Application
 
+# dockerized and terraform structure 
+```
+terraform-docker-aws-ecommerce/
+├─ README.md
+├─ services/
+│ ├─ user/
+│ │ ├─ server.js
+│ │ ├─ package.json
+│ │ └─ Dockerfile
+│ ├─ products/ (same layout)
+│ ├─ orders/
+│ ├─ cart/
+│ └─ frontend/
+│ ├─ server.js
+│ ├─ package.json
+│ └─ Dockerfile
+└─ terraform/
+├─ providers.tf
+├─ variables.tf
+├─ main.tf
+├─ outputs.tf
+└─ userdata.sh.tpl
+```
+Steps to run (quick checklist)
+```
+
+Build and push all Docker images to DockerHub (see earlier examples). Use these image names in terraform/variables.tf or pass via -var.
+
+cd terraform
+
+terraform init
+
+terraform plan -var='ssh_key_name=your-key' -var='aws_region=ca-central-1'
+
+terraform apply -var='ssh_key_name=your-key' -auto-approve
+
+After apply completes, note public_ip from terraform output public_ip and open http://<public_ip>/ — you should see Frontend is Live.
+
+Test backend endpoints:
+
+http://<public_ip>:3001 -> User
+
+http://<public_ip>:3002 -> Products
+
+http://<public_ip>:3003 -> Orders
+
+http://<public_ip>:3004 -> Cart
+
+```
+
 A full-stack MERN e-commerce application built with microservices architecture, featuring 4 separate Node.js backend services and a React frontend.
 
 ## 🏗️ Architecture Overview
